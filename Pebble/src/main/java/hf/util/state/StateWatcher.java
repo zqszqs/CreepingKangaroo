@@ -2,8 +2,8 @@ package hf.util.state;
 
 import fj.Effect;
 import fj.F;
-import fj.Unit;
-import fj.data.HashMap;
+
+import java.util.HashMap;
 
 /**
  * @author Hongfei Zhou
@@ -12,16 +12,24 @@ import fj.data.HashMap;
 public class StateWatcher {
     private String key;
     private F<String, String> keyToValue;
-    private HashMap<String, Effect<String>> effects = HashMap.hashMap();
+    private HashMap<String, Effect<String>> effects = new HashMap<String, Effect<String>>();
+
+    private StateWatcher(String key, F<String, String> keyToValue, HashMap<String, Effect<String>> effects) {
+        this.key = key;
+        this.keyToValue = keyToValue;
+        this.effects = effects;
+    }
 
     public StateWatcher(String key, F<String, String> keyToValue) {
         this.key = key;
         this.keyToValue = keyToValue;
     }
 
+    @SuppressWarnings("unchecked")
     public StateWatcher when(String state, Effect<String> function) {
-        effects.set(state, function);
-        return this;
+        HashMap<String, Effect<String>> cloneEffects = (HashMap<String, Effect<String>>) effects.clone();
+        cloneEffects.put(state, function);
+        return new StateWatcher(key, keyToValue, cloneEffects);
     }
 
     public StateWatcher whenOn(Effect<String> function) {
@@ -34,12 +42,8 @@ public class StateWatcher {
 
     public void start() {
         final String value = keyToValue.f(key);
-        effects.get(value).map(new F<Effect<String>, Unit>() {
-            @Override
-            public Unit f(Effect<String> objectEffect) {
-                objectEffect.e(value);
-                return Unit.unit();
-            }
-        });
+        Effect<String> e = effects.get(value);
+
+        if (e != null) e.e(value);
     }
 }
