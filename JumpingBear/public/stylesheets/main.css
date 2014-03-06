@@ -1,0 +1,110 @@
+body {
+    background-color: #F2F2F2;
+    background-image: url('/assets/images/background.png');
+}
+
+.text_box_back:invalid {
+    background-color: rgba(235, 107, 137, 0.2);
+}
+
+.text_box_back:focus {
+    background-color: rgba(80, 168, 236, 0.1);
+}
+
+.text_box_back {
+    background-color: inherit;
+    border: 0;
+}
+
+.label_input {
+    vertical-align: bottom;
+    font-size: 2em;
+    padding: 2px 2px 2px 2px;
+}
+
+.card_style {
+    padding: 5px 5px 5px 5px;
+    border: 1px;
+    background-color: white;
+    box-shadow: 0 1px 2px 0.5px rgba(127,127,127,0.6);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.card_style_no_margin {
+    border: 1px;
+    background-color: inherit;
+    box-shadow: 0 1px 2px 0.5px rgba(127,127,127,0.6);
+}
+
+.inline {
+    display: inline-block;
+}
+
+.indent {
+    margin-left: 10px;
+}
+
+.body_prop {
+    padding: 2px 4px 2px 4px;
+    margin: 0 1.5px 0 1.5px;
+    border-radius: 2px;
+}
+
+.body_error {
+    background-color: lightcoral;
+}
+.body_warning {
+    background-color: yellow;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.white {
+    background-color: white;
+}
+
+.op_button {
+    float: right;
+    margin: 10px 5px 5px 5px;
+    width: 140px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.op_button button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+.clicked {
+    box-shadow: #FFFFFF;
+}
+
+.button_hover {
+    box-shadow: 0 1px 1px 0.5px rgba(127,127,127,0.6);
+}
+
+.submit_btn {
+    background-color: rgba(81, 143, 255, 0.8);
+}
+
+.submit_btn:disabled {
+    background-color: rgba(191, 189, 184, 0.5);
+}
+
+.hf_label .label_copy {
+    padding: 2px 8px 2px 8px;
+    margin-left: 5%;
+    position: absolute;
+    margin-top: -30px;
+    cursor: pointer;
+}

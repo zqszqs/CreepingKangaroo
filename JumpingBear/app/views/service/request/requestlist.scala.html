@@ -1,0 +1,62 @@
+<div class="request_body" ng-controller="RequestController">
+    <div class="title">
+        <div class="title_name inline">Requests of {{testToRequest.currentTest.name}}</div>
+        <div class="execute_all_requests inline" ng-click="executeAllRequests()">
+            <img width="40" height="40" ng-src="@routes.Assets.at("images/{{reqView.executeAllRequestImg}}")">
+        </div>
+    </div>
+    <div ng-repeat="request in requests" class="request_info">
+        <div class="request_info_main card_style_no_margin" ng-class="{white:!requestMetas[$index].requestModified, edited:requestMetas[$index].requestModified}">
+            <div class="request_status inline"></div>
+            <div class="request_info_section inline" ng-mouseover="reqView.currentHover=$index" ng-mouseleave="reqView.currentHover=-1">
+                <div class="request_info_name_row inline">
+                    <div class="request_info_name inline">{{request.name}}</div>
+                    <div class="request_info_description inline">{{request.description}}</div>
+                    <div class="request_execute inline" ng-click="executeRequest($index)">
+                        <img width="30" height="30" ng-src="@routes.Assets.at("images/{{getImage($index)}}")">
+                    </div>
+                    <div class="request_execute inline" ng-style="!requestMetas[$index].hasResult && {'visibility':'hidden'}" ng-click="showDetail($index)">
+                        <img width="30" height="30" src="@routes.Assets.at("images/detail.png")">
+                    </div>
+                </div>
+                <div class="request_brief_info inline">
+                    <div class="request_method inline" ng-style="{'background-color':reqView.methodColor[request.input.method]}">{{request.input.method}}</div>
+                    <div class="request_endpoint inline">{{request.input.endpoint}}</div>
+                </div>
+                <div class="request_edit_ops inline" ng-class="{show: reqView.currentHover==$index, hide:reqView.currentHover!=$index}">
+                    <div class="request_position_down inline" ng-click="moveDown($index)">
+                        <img width="25" height="25" src="@routes.Assets.at("images/arrow-down.png")">
+                    </div>
+                    <div class="request_position_up inline" ng-click="moveUp($index)">
+                        <img width="25" height="25" src="@routes.Assets.at("images/arrow-up.png")">
+                    </div>
+                    <div class="request_op_delete inline" ng-click="deleteRequest($index)">
+                        <img width="20" height="20" src="@routes.Assets.at("images/deleteapi.png")">
+                    </div>
+                    <div class="request_op_edit inline" ng-click="editRequest($index)">
+                        <img width="20" height="20" src="@routes.Assets.at("images/editapi.png")">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hf-drawer open="reqView.openOperate==$index" draw-height='reqView.gapHeight'>
+            <div ng-switch="reqView.gapContent">
+                <div ng-switch-when="editRequest">
+                    <div ng-include="'/template/service/request/create'"></div>
+                </div>
+                <div ng-switch-when="deleteRequest">
+                    <div ng-include="'/template/service/request/delete'"></div>
+                </div>
+                <div ng-switch-when="showResult">
+                    <div ng-include="'/template/service/request/result'"></div>
+                </div>
+            </div>
+        </hf-drawer>
+    </div>
+    <div ng-show="reqView.startAddRequest" class="new_request_back">
+        <div ng-include="'/template/service/request/create'"></div>
+    </div>
+    <div class="add_new_test_sec" ng-show="!reqView.startAddRequest">
+        <div class="add_new_test_label card_style inline" ng-click="addNewRequest()">Add New Request</div>
+    </div>
+</div>

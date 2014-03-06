@@ -1,0 +1,47 @@
+<div class="suite_list_body" ng-controller="TestController">
+    <div ng-switch="testView.view">
+        <div ng-switch-when="TestList">
+            <div class="title">
+                <div class="title_name">Tests of {{suiteToTest.currentSuite.name}}</div>
+            </div>
+            <div ng-repeat="test in tests" class="suite_box" ng-mouseleave="testView.currentHover=-1" ng-mouseover="testView.currentHover=$index">
+                <div class="card_style_no_margin" ng-class="{white:!testMetas[$index].testModified, edited:testMetas[$index].testModified}">
+                    <div class="suite_status_symbol inline"></div>
+                    <div class="inline suite_detail">
+                        <div class="suite_name_row">
+                            <div class="suite_name inline" ng-click="goToTest($index)">{{test.name}}</div>
+                            <div class="suite_ops_status inline">
+                                <div class="suite_status"></div>
+                                <div class="suite_ops">
+                                    <div class="suite_execute_btn" ng-click="executeTest($index)">
+                                        <img height="30" width="30" ng-src="@routes.Assets.at("images/{{getExecuteImg($index)}}")">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="suite_meta_row">
+                            <div class="test_for_api inline">{{test.forAPI.name}}</div>
+                            <div class="suite_edit_sec inline" ng-class="{show:testView.currentHover==$index, hide:testView.currentHover!=$index}">
+                                <div><img height="20" width="20" src="@routes.Assets.at("images/deleteapi.png")" title="delete" ng-click="deleteTest($index)"></div>
+                                <div><img height="20" width="20" src="@routes.Assets.at("images/editapi.png")" title="edit" ng-click="updateTest($index)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="operation_gap" ng-style="testView.editIndex==$index && {'height': testView.currHeight} || testView.editIndex!=$index && {'height': '0'}">
+                    <div ng-switch="testView.gapContent">
+                        <div ng-switch-when="editTest">
+                            <div ng-include="'/template/service/test/edit'"></div>
+                        </div>
+                        <div ng-switch-when="deleteTest">
+                            <div ng-include="'/template/service/test/delete'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="CreateTest">
+            <div ng-include="'/template/service/test/create'"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="suite_list_body">
+    <div class="title">
+        <div class="title_name">All Suites</div>
+    </div>
+    <div ng-repeat="suite in suites" class="suite_box" ng-mouseleave="suiteView.currentHover=-1" ng-mouseover="suiteView.currentHover=$index">
+        <div class="card_style_no_margin" ng-class="{white:!suiteMetas[$index].suiteModified, edited:suiteMetas[$index].suiteModified}" >
+            <div class="suite_status_symbol inline"></div>
+            <div class="inline suite_detail">
+                <div class="suite_name_row">
+                    <div class="suite_name inline" ng-click="goToSuite($index)" id="{{suite._id.$oid}}">{{suite.name}}</div>
+                    <div class="suite_ops_status inline">
+                        <div class="suite_status"></div>
+                        <div class="suite_ops">
+                            <div class="suite_execute_btn">
+                                <img height="30" width="30" src="@routes.Assets.at("images/execute.png")">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="suite_meta_row">
+                    <div class="suite_meta_statistic inline">
+                        <div class="suite_contained_apis inline">7</div>
+                        <div class="suite_contained_tests inline">6</div>
+                    </div>
+                    <div class="suite_edit_sec inline" ng-class="{show:suiteView.currentHover==$index, hide:suiteView.currentHover!=$index}">
+                        <div><img height="20" width="20" src="@routes.Assets.at("images/deleteapi.png")" title="delete" ng-click="deleteSuite($index)"></div>
+                        <div><img height="20" width="20" src="@routes.Assets.at("images/editapi.png")" title="edit" ng-click="updateSuite($index)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hf-drawer open="suiteView.editIndex==$index" draw-height="suiteView.currHeight">
+            <div ng-switch="suiteView.gapContent">
+                <div ng-switch-when="editSuite">
+                    <div ng-include="'/template/service/suite/edit'"></div>
+                </div>
+                <div ng-switch-when="deleteSuite">
+                    <div ng-include="'/template/service/suite/delete'"></div>
+                </div>
+            </div>
+        </hf-drawer>
+    </div>
+</div>

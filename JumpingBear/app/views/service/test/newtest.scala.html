@@ -1,0 +1,25 @@
+<div class="create_test">
+    <div class="create_test_head">Create New Test for {{suiteToTest.currentSuite.name}}</div>
+    <div class="test_name card_style">
+        <div class="">
+            <div class="inline label_input">Name : </div>
+            <label>
+                <input name="testname" class="test_name_label_input label_input text_box_back" value="newTest.forAPI.id" ng-model="newTest.name">
+            </label>
+        </div>
+    </div>
+    <div class="test_name card_style">
+        <div class="">
+            <div class="inline label_input">For API : </div>
+            <label>
+                <select class="test_name_label_input label_input text_box_back"
+                        ng-model="newTest.forAPISelect"
+                        ng-options="brief.name for brief in briefAPIs">
+                    <option value="">---  select API  ---</option>
+
+                </select>
+            </label>
+        </div>
+    </div>
+    <hf-button on-submit='button.submit' on-discard='button.discard' param='$index' disable='button.disabled'></hf-button>
+</div>

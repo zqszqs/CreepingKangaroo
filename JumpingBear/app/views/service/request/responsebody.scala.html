@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style>
+        .indent {
+        margin-left : 20px ;
+        }
+
+        .inline {
+        display : inline-block ;
+        }
+
+            .body_prop {
+            padding: 2px 4px 2px 4px;
+                margin: 0 1.5px 0 1.5px;
+                border-radius: 2px;
+            }
+
+            .body_error {
+                background-color: lightcoral;
+            }
+            .body_warning {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div>{</div>
+            <div class="indent">
+                <div>
+                    <div class="inline">"a":</div>
+                    <div class="inline">"b"</div>
+                    <div class="inline">,</div>
+                </div>
+                <div>
+                    <div class="inline">"b":</div>
+                    <div class="inline">{</div>
+                    <div class="indent">
+                        <div>
+                            <div class="inline">"e":</div><div class="inline temp_value">WARNING</div>
+                        </div>
+                    </div>
+                    <div class="inline">}</div>
+                    <div class="inline">,</div>
+                </div>
+                <div>
+                    <div class="inline">"c":</div>
+                    <div class="inline">[</div>
+                    <div class="indent">
+                        <div>
+                            <div class="inline">"e"</div>
+                        </div>
+                    </div>
+                    <div class="inline">]</div>
+                </div>
+            </div>
+            <div>}</div>
+        </div>
+    </body>
+</html>

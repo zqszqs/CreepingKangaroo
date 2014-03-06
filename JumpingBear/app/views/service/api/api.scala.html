@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/apilist.css")">
+
+<div class="api_section">
+    <div class="title">
+        <div class="title_name inline">{{currentTitle}}</div>
+        <div class="add_new_api inline" ng-click="viewSelect='apicreate';currentTitle='Add New API'">
+            <img height="35" width="35" src="@routes.Assets.at("images/addapi.png")" alt="add API" title="Add API">
+        </div>
+    </div>
+    <div ng-switch="viewSelect">
+        <div ng-switch-when="loading" class="api_section_loading">Loading...</div>
+        <div ng-switch-when="apilist">
+            <div ng-include="'/template/service/api/list'"></div>
+        </div>
+        <div ng-switch-when="apicreate">
+            <div ng-include="'/template/service/api/create'"></div>
+        </div>
+        <div ng-switch-when="testplans">
+            <div ng-include="'/test/api/template/testplan'"></div>
+        </div>
+    </div>
+</div>

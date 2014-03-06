@@ -1,0 +1,35 @@
+@(current: String)
+
+<div class="global_header_wrap card_style_no_margin white">
+    <div class="global_header">
+        <div class="logo_image">
+            <img src="@routes.Assets.at("images/favicon.png")">
+        </div>
+        <div class="head_name">StubHub QE</div>
+        <div class="sep_line head_line"></div>
+    </div>
+    <div class="section_header" ng-controller="SectionController">
+        <div class="menu_bar">
+            <div class="site_nav inline">
+                <div class="current_section" ng-mouseover="menuShow=true">
+                    <div class="current_text">@current</div>
+                </div>
+                <div class="all_menu card_style" ng-class="{menu_show:menuShow}" ng-mouseleave="menuShow=false">
+                    <div ng-repeat="item in menuItems">
+                        <div class="menu_item"><a ng-href="{{item.url}}">{{item.name}}</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section_nav inline">
+                <div class="nav_buttons">
+                    <div ng-repeat="button in buttons" class="inline nav_button_wrap" ng-click="clickNav($index)">
+                        <a ng-href="{{button.url}}">
+                            <div class="nav_button" ng-style="$index==selectBtn && {'font-weight':'bold'}">{{button.name}}</div>
+                            <div ng-class="{choosen_line: $index==selectBtn}"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

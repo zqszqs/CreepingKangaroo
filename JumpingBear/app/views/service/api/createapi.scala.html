@@ -1,0 +1,36 @@
+<div id="create_api_section" ng-controller="CreateAPIController">
+    <div class="card_style api_create_name">
+        <label>
+            <span class="label_span">Name:</span>
+            <input class="text_box_back label_input" type="text" placeholder="input name here" ng-model="newAPI.name" value="{{newAPI.name}}">
+        </label>
+    </div>
+    <div class="api_create_info">
+        <div class="api_create_service card_style_no_margin white">
+            <div class="api_domain">
+                <div class="api_info_label inline">Domain:</div>
+                <div class="api_create_method inline" ng-click="toggleSelector()">{{newAPI.domain}}</div>
+            </div>
+        </div>
+        <div>
+            <div class="domain_selector" ng-class="{domain_selector_expand:showSelector, domain_selector_collapse:!showSelector}">
+                <div>
+                    <div class="api_create_domain" ng-repeat="l_domain in allDomain">
+                        <div ng-repeat="domain in l_domain" ng-click="toggleSelector();newAPI.domain=domain">{{domain}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="white api_create_service card_style_no_margin">
+            <div>
+                <div class="api_info_label inline">Endpoint:</div>
+                <div class="inline api_create_endpoint">
+                    <label>
+                        <input class="text_box_back label_input" type="url" placeholder="http://www.example.com" ng-model="newAPI.endpoint" value="{{newAPI.endpoint}}">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hf-button on-submit='submitAPI' on-discard='discardAPI' param='newAPI' disable='submitBtnDisabled'></hf-button>
+    </div>
+</div>

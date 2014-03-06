@@ -1,0 +1,92 @@
+
+.sub_sep_line {
+    height: 4px;
+    width: 50%;
+    background-image: linear-gradient(90deg, transparent, #5F9BFF 30%, transparent);
+}
+
+
+#api_name label input {
+    width: 65%;
+}
+
+.label_span {
+    width: 10%;
+    font-size: 2em;
+    margin-left: 2%;
+    margin-right: 10px;
+}
+
+
+.api_info_label {
+    color: #403F3E;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#api_method {
+    display: inline-block;
+    text-align: center;
+}
+
+#header_section {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.api_header {
+    margin: 5px 10% 5px 4%;
+    background-color: rgba(148, 214, 255, 0.3);
+}
+
+.api_header div {
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.header_input {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 2px 2px 2px 2px;
+}
+
+.api_header .api_header_name {
+    text-align: center;
+    background-color: rgba(108, 199, 162, 0.5);
+    padding: 10px 0 10px 0;
+    width: 35%;
+    box-shadow: 2px 0 1px 0 rgba(140, 171, 105, 0.7);
+}
+
+.api_header .api_header_value {
+    text-align: center;
+    padding: 10px 2% 10px 2%;
+    width: 60%;
+}
+
+.json_field {
+    margin-left: 20px;
+}
+
+.json_field div {
+    display: inline-block;
+}
+
+.json_field .field_delimeter {
+    margin: 0 5px 0 5px;
+}
+
+.field_feature {
+    font-size: 1em;
+    padding: 2px 2px 2px 2px;
+    background-color: deepskyblue;
+}
+
+#body_section {
+    font-size: 1.2em;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}

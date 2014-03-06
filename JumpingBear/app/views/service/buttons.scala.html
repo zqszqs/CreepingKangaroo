@@ -1,0 +1,27 @@
+<div class="op_buttons">
+    <div class="op_button inline">
+        <button class="submit_btn"
+        ng-class="{clicked:submitClicked, button_hover:submitHover&&!submitClicked&&!disabled}"
+        ng-mouseover="submitHover=true"
+        ng-mouseleave="submitHover=false"
+        ng-mousedown="submitClicked=true"
+        ng-mouseup="submitClicked=false"
+        ng-click="onSubmit(param)"
+        ng-disabled="disable"
+        >
+            <img height="40" width="40" src="@routes.Assets.at("images/checkmark.png")" alt="submit" title="Submit">
+        </button>
+    </div>
+    <div class="op_button inline">
+        <button class="discard_btn"
+        ng-class="{clicked:disCardClicked, button_hover:discardHover&&!disCardClicked}"
+        ng-mouseover="discardHover=true"
+        ng-mouseleave="discardHover=false"
+        ng-mousedown="disCardClicked=true"
+        ng-mouseup="disCardClicked=false"
+        ng-click="onDiscard(param)"
+        >
+            <img height="40" width="40" src="@routes.Assets.at("images/cancelmark.png")" alt="cancel" title="Cancel">
+        </button>
+    </div>
+</div>

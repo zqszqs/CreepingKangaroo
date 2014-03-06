@@ -1,0 +1,133 @@
+.sep_line {
+    margin-top: 20px;
+    height: 4px;
+}
+
+.head_line {
+    background-image: linear-gradient(90deg, #62B5E8, transparent);
+}
+
+.global_header {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo_image {
+    display: inline-block;
+    width: 10%;
+}
+
+.logo_image img {
+    height: 70px;
+}
+
+.head_name {
+    display: inline-block;
+    width: 70%;
+    text-align: center;
+    font-size: 4em;
+}
+
+.menu_bar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.site_nav {
+    width: 20%;
+    padding: 0 0 0 0;
+    background-color: inherit;
+}
+
+.site_nav .current_section {
+    text-align: center;
+    padding: 0 2% 0 2%;
+    background-color: rgba(206, 206, 206, 0.5);
+}
+
+.site_nav .current_section .current_text {
+    width: 80%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: auto;
+    font-size: 1.8em;
+}
+
+.all_menu {
+    width: 24.2%;
+    border-radius: 2px;
+    display: none;
+    margin-top: -65px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s, margin-top 0.2s;
+}
+
+.all_menu:hover {
+    opacity: 1;
+    margin-top: -55px;
+}
+
+.menu_show {
+    display: block;
+}
+
+.menu_item {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.8em;
+    text-align: center;
+    padding: 3px 0 3px 0;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.menu_item:hover {
+    background-color: rgba(169, 169, 173, 0.5);
+}
+
+.section_nav {
+    min-width: 75%;
+    padding-bottom: 0;
+}
+
+.nav_buttons {
+    margin-left: 3%;
+}
+
+.nav_button_wrap {
+    padding: 0 1% 0 1%;
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+.choosen_line {
+    margin-top: 2px;
+    height: 3px;
+    background-color: rgba(74, 148, 245, 0.7);
+}
+
+.global_header_wrap {
+    margin-bottom: 30px;
+}
+/* ----------------------------------------  */
+
+.global_footer {
+    width: 100%;
+}
+
+.gradient_green {
+    background-image: linear-gradient(90deg, transparent, #58E85F, #B4E858, transparent);
+}
+
+.footer_description {
+    width: 50%;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}

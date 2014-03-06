@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/suite.css")">
+
+<div class="suite_body">
+    <div class="left_bar inline">
+        <div class="suite_nav_sec">
+            <div class="all_suites card_style" ng-click="toAllSuite()">All Suites</div>
+            <div class="suite_nav_inner card_style">
+                <div class="suite_nav_h1" ng-click="goToMenuSuite(currentSuite)" ng-class="{chosen_test:suiteToTest.selectedTestIndex==-1}">{{currentSuite.name}}</div>
+                <div class="suite_nav_h2" ng-repeat="test in suiteToTest.tests" ng-click="goToMenuTest($index)" ng-class="{chosen_test:suiteToTest.selectedTestIndex==$index}">
+                    {{test.name}}
+                </div>
+            </div>
+        </div>
+        <div class="suite_filter_sec card_style">
+            <div>Filters to be done</div>
+        </div>
+    </div>
+    <div class="middle_body inline">
+        <div class="suite_view_wrap">
+            <div ng-switch="currView">
+                <div ng-switch-when="loading" class="suite_view_loading">Loading...</div>
+                <div ng-switch-when="SuiteList">
+                    <div ng-include="'/template/service/suite/list'"></div>
+                </div>
+                <div ng-switch-when="CreateSuite">
+                    <div ng-include="'/template/service/suite/create'"></div>
+                </div>
+                <div ng-switch-when="TestList">
+                    <div ng-include="'/template/service/test/list'"></div>
+                </div>
+                <div ng-switch-when="RequestList">
+                    <div ng-include="'/template/service/request/list'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right_bar inline">
+        <div class="current_view_ops card_style">
+            <div class="current_view_op" ng-click="op1.op()">{{op1.name}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="new_request_sec">
+    <div class="new_request_wrap card_style">
+        <div class="request_name_desc">
+            <div>
+                <div class="req_label_span inline">Name : </div>
+                <div class="request_name_div inline">
+                    <label>
+                        <input class="request_name" placeholder="Enter request name" ng-model="newRequest.name">
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="req_label_span inline">Description : </div>
+                <div class="request_name_div inline">
+                    <label>
+                        <input class="request_name" placeholder="Enter description" ng-model="newRequest.description">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="new_request_info_wrap card_style">
+        <div>
+            <div class="request_new_method inline" ng-style="{'background-color':reqView.methodColor[newRequest.input.method]}" ng-click="selectMethodPop()">{{newRequest.input.method}}</div>
+            <div class="request_new_endpoint inline">
+                <label>
+                    <input class="request_name" placeholder="enter endpoint" ng-model="newRequest.input.endpoint">
+                </label>
+            </div>
+            <div class="request_new_method_select card_style" ng-show="reqView.startSelectMethod && newRequest.index == $index">
+                <div>
+                    <div class="method_row" ng-repeat="methodRow in reqView.httpMethods">
+                        <div class="method_item inline" ng-repeat="method in methodRow">
+                            <div class="inline" ng-style="{'background-color': method.color}" ng-click="selectMethod(method)">{{method.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="request_endpoint_param">
+            <div class="request_endpoint_param">
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter url parameter name">
+                </label>
+                <b>:</b>
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter url parameter value">
+                </label>
+            </div>
+        </div>
+        <div class="request_header">
+            <div class="req_label_span">Headers:</div>
+            <div ng-repeat="h in newRequest.input.headers" class="request_endpoint_param">
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter header name" ng-model="h.name">
+                </label>
+                <b>:</b>
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter header value" ng-model="h.value">
+                </label>
+            </div>
+        </div>
+        <div class="request_body">
+            <div class="req_label_span">Body:</div>
+            <div class="new_request_body_div">
+                <label>
+                    <textarea class="new_request_body" placeholder="Enter request body" ng-model="newRequest.input.body"></textarea>
+                </label>
+                <div class="parsed_body"></div>
+            </div>
+        </div>
+    </div>
+    <div class="new_request_response_wrap card_style">
+        <div class="new_response_status">
+            <div class="req_label_span inline">Response code : </div>
+            <div class="request_name_div inline">
+                <label>
+                    <input class="inline response_code request_name" placeholder="Enter response status" ng-model="newRequest.output.responseCode">
+                </label>
+            </div>
+        </div>
+        <div class="request_header">
+            <div class="req_label_span">Headers:</div>
+            <div ng-repeat="h in newRequest.output.headers" class="request_endpoint_param">
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter header name" ng-model="h.name">
+                </label>
+                <b>:</b>
+                <label class="request_param inline">
+                    <input class="request_name" placeholder="Enter header value" ng-model="h.value">
+                </label>
+            </div>
+        </div>
+        <div class="request_body">
+            <div class="req_label_span">Body:</div>
+            <div class="new_request_body_div">
+                <label>
+                    <textarea class="new_request_body" placeholder="Enter request body" ng-model="newRequest.output.body" ></textarea>
+                </label>
+                <div class="parsed_body"></div>
+            </div>
+        </div>
+    </div>
+    <hf-button on-submit='button.submit' on-discard='button.discard'></hf-button>
+</div>

@@ -1,0 +1,16 @@
+@import views.html.service.main
+@import views.html.service.sectionheader
+
+@main("api")("API Testing") {
+    @sectionheader("API Testing")
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/apitest.css")">
+    <script src="@routes.Assets.at("javascripts/controllers/service/service.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/controllers/service/APIController.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/controllers/service/SuiteController.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/controllers/service/TestController.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/controllers/service/RequestController.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/services/api_service.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/directives/api_directive.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/filters/api_filter.js")" type="text/javascript"></script>
+    <div ng-view="api-body"></div>
+}

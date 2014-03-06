@@ -1,0 +1,481 @@
+.suite_body {
+    width: 90%;
+    margin: auto;
+}
+
+.left_bar {
+    width: 20%;
+    vertical-align: top;
+}
+
+.middle_body {
+    width: 58%;
+    vertical-align: top;
+}
+
+.right_bar {
+    width: 18%;
+    vertical-align: top;
+}
+
+.suite_nav_sec {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.suite_nav_inner {
+    margin-top: 20px;
+}
+
+.all_suites {
+    font-size: 1.5em;
+    padding: 5px 0 5px 8%;
+    cursor: pointer;
+}
+
+.all_suites:hover {
+    background-color: rgba(216, 211, 222, 0.6);
+}
+
+.suite_nav_h1 {
+    font-size: 1.2em;
+    padding: 5px 0 5px 5%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.suite_nav_h1:hover {
+    background-color: rgba(216, 211, 222, 0.6);
+}
+
+.suite_nav_h2 {
+    font-size: 1.1em;
+    padding: 5px 0 5px 15%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.suite_nav_h2:hover {
+    background-color: rgba(216, 211, 222, 0.6);
+}
+
+.chosen_test {
+    font-weight: bold;
+}
+
+.suite_view_wrap {
+    margin-top: 10px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.suite_list_body {
+
+}
+
+.suite_status_symbol {
+    margin-top: 5px;
+    vertical-align: top;
+    width: 1%;
+    height: 80px;
+    overflow: hidden;
+}
+
+.suite_box {
+    margin-bottom: 1px;
+}
+
+.suite_detail {
+    width: 96%;
+}
+
+.suite_name {
+    margin-top: 10px;
+    margin-left: 2%;
+    width: 62%;
+    vertical-align: top;
+    font-size: 1.5em;
+    overflow: hidden;
+    overflow-x: hidden;
+    cursor: pointer;
+}
+
+.suite_ops_status {
+    margin: 8px 0 0 0;
+    width: 32%;
+}
+
+.suite_execute_btn {
+    margin: 5px 0 0 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.suite_status {
+    height: 10px;
+    background-color: lightblue;
+    vertical-align: bottom;
+}
+
+.suite_meta_row {
+    margin: 0 0 5px 0;
+}
+
+.suite_meta_statistic {
+    margin: 0 0 0 2%;
+    width: 65%;
+}
+
+.suite_meta_statistic div {
+    cursor: pointer;
+    height: 27px;
+    width: 27px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.suite_contained_apis {
+    background-color: lightblue;
+}
+
+.suite_contained_tests {
+    background-color: lightseagreen;
+}
+
+.suite_edit_sec {
+    width: 25%;
+    float: right;
+    vertical-align: bottom;
+    margin-right: 15px;
+}
+
+.suite_edit_sec div {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    padding: 2px 7px 2px 7px;
+}
+
+.current_view_ops {
+    margin: 10px 0 0 0;
+}
+
+.current_view_op {
+    font-size: 1.2em;
+    padding: 5px 0 5px 5%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.current_view_op:hover {
+    background-color: rgba(216, 211, 222, 0.6);
+}
+
+.test_for_api {
+    margin-left: 3%;
+    padding: 2px 3px 2px 3px;
+    border-radius: 3px;
+    font-size: 1.1em;
+    background-color: pink;
+}
+
+.operation_gap {
+    transition: height 0.2s;
+    padding: 0 2% 0 2%;
+    overflow: hidden;
+    border: 0 inset;
+    background-color: rgba(223, 218, 229, 0.6);
+    box-shadow: 0 1px 1.5px rgba(124, 121, 127, 0.6);
+}
+
+.suite_name_label {
+    font-size: 1.2em;
+    margin: 0 0 0 2%;
+    vertical-align: top;
+}
+
+.suite_name_input {
+    width: 70%;
+    font-size: 1.2em;
+    border: none;
+    vertical-align: bottom;
+}
+
+.edited {
+    background-color: rgba(177, 225, 232, 0.8);
+}
+
+.suite_name_delete_label {
+    vertical-align: top;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.suite_name_delete_button {
+    margin-left: 0;
+    float: right;
+    position: relative;
+}
+
+.create_suite_name_label {
+    width: 100%;
+    margin-left: 5%;
+}
+
+.create_suite_name_input {
+    margin: 0 0 0 10%;
+    width: 85%;
+}
+
+.suite_view_loading {
+    text-align: center;
+    font-size: 6em;
+    color: #BFBDBA;
+    margin: 50px 0 50px 0;
+    text-shadow: 0 2.5px 0 white;
+}
+
+.create_test_head {
+    background-image: linear-gradient(90deg, rgba(145, 204, 196, 0.7), transparent);
+    font-size: 1.5em;
+    padding: 5px 0 5px 2%;
+}
+
+.test_name {
+    margin: 20px 0 0 0;
+}
+
+.test_name_label {
+    font-size: 1.5em;
+}
+
+.test_name_label_input {
+    width: 75%;
+}
+
+.test_edit_sec {
+    width: 25%;
+    float: right;
+    vertical-align: bottom;
+    margin-right: 15px;
+}
+
+.test_edit_sec div {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    padding: 2px 7px 2px 7px;
+}
+
+.title_name {
+    background-image: linear-gradient(90deg, #BCC1E8, transparent);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 75%;
+    padding: 5px 0 5px 10px;
+    font-size: 1.5em;
+}
+
+
+.request_info_main {
+    margin: 0 0 1px 0;
+}
+
+.request_info_section {
+    width: 95%;
+    padding: 0 0 5px 0;
+}
+
+.request_status {
+    margin-top: 5px;
+    background-color: red;
+    vertical-align: top;
+    width: 1%;
+    height: 80px;
+    overflow: hidden;
+}
+
+.request_info_name_row {
+    width: 98%;
+}
+
+.request_execute {
+    float: right;
+    margin: 10px 4px 0 4px;
+    cursor: pointer;
+}
+
+.request_info_name {
+    font-size: 1.4em;
+    margin: 10px 0 5px 1%;
+    width: 50%;
+}
+
+.request_brief_info {
+    vertical-align: bottom;
+    margin: 10px 0 10px 1%;
+    width: 65%;
+}
+
+.request_method {
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+}
+
+.request_edit_ops {
+    float: right;
+    margin: 5px 2% 0 0;
+    width: 140px;
+}
+
+.request_edit_ops div {
+    margin-top: 10px;
+    margin-right: 12px;
+    cursor: pointer;
+    float: right;
+}
+
+.add_new_test_sec {
+    margin: 40px auto 10px auto;
+}
+
+.add_new_test_label {
+    text-align: center;
+    width: 35%;
+    font-size: 1.2em;
+    margin: 0 30% 0 30%;
+    cursor: pointer;
+}
+
+.new_request_sec {
+}
+
+.req_label_span  {
+    margin: 0 5px 0 2%;
+    font-size: 1.2em;
+    vertical-align: top;
+}
+
+.request_name_div {
+    width: 40%;
+}
+
+.request_name {
+    border: none;
+    font-size: 1.2em;
+    width: 95%;
+}
+
+.request_new_method {
+    margin: 5px 2% 5px 2%;
+    padding: 2px 8px 2px 8px;
+    font-size: 1.3em;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.request_new_endpoint {
+    font-size: 13px;
+    width: 75%;
+}
+
+.request_endpoint_param {
+    width: 90%;
+    margin: 5px 0 3px 2%;
+}
+
+.request_header {
+    width: 90%;
+    margin: 15px 0 3px 0;
+}
+
+.request_header .request_endpoint_param {
+    margin-left: 4%;
+}
+
+.request_param {
+    margin-left: 2%;
+    width: 40%;
+}
+
+.request_body {
+    margin: 15px 0 0 0;
+}
+
+.new_request_body {
+    margin: 0 0 0 4.5%;
+    width: 80%;
+    height: 200px;
+    resize: none;
+    font-size: 1.2em;
+    border: none;
+}
+
+.new_request_back {
+    background-color: lightgray;
+    padding: 5px 1% 5px 1%;
+}
+
+.request_new_method_select {
+    width: 350px;
+    background-color: #E4E8F0;
+    position: absolute;
+    float: left;
+}
+
+.method_item {
+    width: 33%;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.method_item div {
+    margin: 1px 0 1px 0;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.request_result_input {
+    margin: 10px 0 0 0;
+}
+
+.result_request_url {
+    width: 80%;
+    overflow: visible;
+}
+.result_request_header_label {
+    margin: 10px 0 0 0;
+    font-size: 1.2em;
+}
+
+.result_request_headers {
+    margin: 4px 0 0 5%;
+}
+
+.result_request_body {
+    margin: 4px 3% 0 5%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.result_request_method {
+    margin: 5px 2% 5px 0;
+    padding: 2px 8px 2px 8px;
+    font-size: 1.1em;
+    border-radius: 3px;
+}
+
+.request_result_output {
+    margin: 5px  0 0 0;
+}
+
+.execute_all_requests {
+    float: right;
+    vertical-align: middle;
+    margin: 10px 5.5% 0 0;
+    cursor: pointer;
+}

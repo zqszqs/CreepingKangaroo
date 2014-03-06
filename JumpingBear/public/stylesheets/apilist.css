@@ -1,0 +1,246 @@
+@media screen and (max-device-width: 960px) {
+    .api_section {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    .api_section {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .api_section {
+        width: 65%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+    }
+}
+
+.title {
+    background-image: linear-gradient(90deg, transparent, #BCC1E8 8%, transparent);
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.add_new_api {
+    float: right;
+    margin: 12px 3% 0 0;
+    cursor: pointer;
+}
+
+.add_new_api img {
+
+}
+
+.title_name {
+    width: 65%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 7%;
+    font-size: 2.5em;
+}
+
+.single_api {
+    padding: 5px 2% 10px 4%;
+    margin-bottom: 1px;
+}
+
+.single_api_name {
+    width: 50%;
+}
+
+.single_api_name label input {
+    width: 100%;
+}
+
+.single_api_service {
+    color: rgba(0, 0, 0, 0.6);
+    margin-left: 5%;
+    margin-top: 5px;
+    vertical-align: top;
+    text-align: center;
+    padding: 2px 2px 2px 2px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.single_api_meta {
+    margin-top: 15px;
+    margin-left: 3%;
+}
+
+.single_api_testnumber {
+    padding: 3px 10px 3px 10px;
+    background-color: lightgreen;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.single_api_endpoint {
+    margin-left: 10%;
+    opacity: 0.6;
+    overflow: hidden;
+}
+
+.single_api_ops {
+    position: relative;
+    vertical-align: bottom;
+    margin-top: 20px;
+    float: right;
+}
+
+.single_api_ops div {
+    display: inline-block;
+    padding: 2px 7px 2px 7px;
+    cursor: pointer;
+}
+
+.single_api_domain {
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 1.2em;
+    float: right;
+    cursor: pointer;
+}
+
+.api_section_loading {
+    text-align: center;
+    font-size: 6em;
+    color: #BFBDBA;
+    margin: 50px 0 50px 0;
+    text-shadow: 0 2.5px 0 white;
+}
+
+.api_create_info {
+    margin-top: 10px;
+}
+
+.api_create_service .api_info_label{
+    vertical-align: top;
+    margin-left: 2.5%;
+}
+
+.api_create_service div label input {
+    font-size: 1.5em;
+    vertical-align: bottom;
+}
+
+.api_create_method {
+    margin-left: 3%;
+    font-size: 1.5em;
+    background-color: lightskyblue;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    vertical-align: top;
+    cursor: pointer;
+    color: white;
+}
+
+.api_create_endpoint {
+    width: 80%;
+}
+
+.api_create_endpoint label input {
+    width: 100%;
+}
+
+.api_domain {
+    padding-top: 10px;
+}
+
+.api_create_domain div {
+    display: inline-block;
+    margin: 5px 1% 5px 1%;
+    font-size: 1.2em;
+    background-color: lightskyblue;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    vertical-align: top;
+    cursor: pointer;
+    color: white;
+}
+
+.domain_selector {
+    height: 0;
+    background-color: #F9FFFE;
+    width: 99%;
+    margin: auto;
+    border: 0 inset;
+    overflow: hidden;
+    transition: height 0.5s, border 0.5s;
+}
+
+.domain_selector_expand {
+    height: 440px;
+    border: 1.5px inset;
+}
+
+.domain_selector_collapse {
+    border: 0;
+    height: 0;
+}
+
+.create_submit_btn {
+    background-color: rgba(81, 143, 255, 0.8);
+}
+
+.create_submit_btn:disabled {
+    background-color: rgba(191, 189, 184, 0.5);
+}
+
+.create_discard_btn {
+    background-color: rgba(183, 188, 189, 0.8);
+}
+
+.create_btn {
+    float: right;
+    margin: 10px 5px 5px 5px;
+    width: 140px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.create_btn button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+}
+
+.clicked {
+    box-shadow: #FFFFFF;
+}
+
+.create_btn_hover {
+    box-shadow: 0 1px 1px 0.5px rgba(127,127,127,0.6);
+}
+
+.new_api_in_list {
+    background-color: rgba(177, 225, 232, 0.8);
+}
+
+.api_list_gap {
+    transition: height 0.3s;
+    padding: 0 2% 0 2%;
+    overflow: hidden;
+    border: 0 inset;
+    background-color: rgba(223, 218, 229, 0.6);
+    box-shadow: 0 1px 1.5px rgba(124, 121, 127, 0.6);
+}
+
+.delete_api_label {
+    margin: 15px 0 5px 5%;
+    font-size: 1.4em;
+}
+
+.delete_last_op {
+    float: right;
+}

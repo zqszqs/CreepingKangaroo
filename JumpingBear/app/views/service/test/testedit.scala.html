@@ -1,0 +1,13 @@
+<div class="card_style">
+    <div class="inline suite_name_label">Test Name :</div>
+    <label>
+        <input class="suite_name_input label_input" value="{{currentTest.name}}" ng-model="currentTest.name">
+    </label>
+</div>
+<div class="card_style">
+    <div class="inline suite_name_label">For API :</div>
+    <label>
+        <input class="suite_name_input label_input" value="{{currentTest.forAPI.name}}" ng-model="currentTest.forAPI.name">
+    </label>
+</div>
+<div ng-include="'/template/service/common/opbuttons'"> </div>

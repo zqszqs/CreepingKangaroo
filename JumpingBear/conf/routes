@@ -1,0 +1,124 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+GET           /assets/*file                                          controllers.Assets.at(path="/public", file)
+
+#########################################################################################################
+#########################################################################################################
+# Service Template /template/service
+POST        /debug/json                                             controllers.Application.debug
+
+###############################################################################################
+# Service Template API /api
+GET           /service/api                                           controllers.service.facetime.ServiceCommonTemplateController.getHome
+GET           /template/service/api                                  controllers.service.facetime.ServiceAPITemplateController.getAPI
+GET           /template/service/api/list                             controllers.service.facetime.ServiceAPITemplateController.getAPIList
+GET           /template/service/api/create                           controllers.service.facetime.ServiceAPITemplateController.getCreateAPI
+
+###############################################################################################
+# Service Template SUITE /suite
+GET           /service/suite                                         controllers.service.facetime.ServiceCommonTemplateController.getHome
+GET           /template/service/suite                                controllers.service.facetime.ServiceSuiteTemplateController.getSuite
+GET           /template/service/suite/list                           controllers.service.facetime.ServiceSuiteTemplateController.getSuiteList
+GET           /template/service/suite/edit                           controllers.service.facetime.ServiceSuiteTemplateController.getSuiteEdit
+GET           /template/service/suite/delete                         controllers.service.facetime.ServiceSuiteTemplateController.getSuiteDelete
+GET           /template/service/suite/create                         controllers.service.facetime.ServiceSuiteTemplateController.getNewSuite
+
+###############################################################################################
+# Service Template TEST /test
+GET           /template/service/test/list                            controllers.service.facetime.ServiceTestTemplateController.getTest
+GET           /template/service/test/create                          controllers.service.facetime.ServiceTestTemplateController.getNewTest
+GET           /template/service/test/edit                            controllers.service.facetime.ServiceTestTemplateController.getTestEdit
+GET           /template/service/test/delete                          controllers.service.facetime.ServiceTestTemplateController.getTestDelete
+
+###############################################################################################
+# Service Template REQUEST /request
+GET           /template/service/request/list                         controllers.service.facetime.ServiceRequestTemplateController.getRequest
+GET           /template/service/request/create                       controllers.service.facetime.ServiceRequestTemplateController.getRequestCreate
+GET           /template/service/request/delete                       controllers.service.facetime.ServiceRequestTemplateController.getRequestDelete
+GET           /template/service/request/result                       controllers.service.facetime.ServiceRequestTemplateController.getRequestResult
+
+###############################################################################################
+# Service Template COMMON  /common
+GET           /template/service/common/opbuttons                     controllers.service.facetime.ServiceCommonTemplateController.getOpButtons
+GET           /template/service/common/showlabels                    controllers.service.facetime.ServiceCommonTemplateController.getLabels
+#########################################################################################################
+#########################################################################################################
+# Service Data /service
+
+#########################################################################################################
+# Service API /api
+POST          /data/service/api/                                     controllers.service.backbone.birdbridge.ServiceAPIController.create
+GET           /data/service/api/                                     controllers.service.backbone.birdbridge.ServiceAPIController.get(id = "0", action: Option[String])
+GET           /data/service/api/:id                                  controllers.service.backbone.birdbridge.ServiceAPIController.get(id: String, action: Option[String])
+PUT           /data/service/api/:id                                  controllers.service.backbone.birdbridge.ServiceAPIController.update(id: String)
+DELETE        /data/service/api/:id                                  controllers.service.backbone.birdbridge.ServiceAPIController.delete(id: String)
+
+#########################################################################################################
+# Service SUITE /suite
+POST          /data/service/suite/                                   controllers.service.backbone.birdbridge.ServiceSuiteController.create
+GET           /data/service/suite/                                   controllers.service.backbone.birdbridge.ServiceSuiteController.get(id = "0")
+GET           /data/service/suite/:id                                controllers.service.backbone.birdbridge.ServiceSuiteController.get(id: String)
+PUT           /data/service/suite/:id                                controllers.service.backbone.birdbridge.ServiceSuiteController.update(id: String)
+DELETE        /data/service/suite/:id                                controllers.service.backbone.birdbridge.ServiceSuiteController.delete(id: String)
+
+#########################################################################################################
+# Service TEST /test
+POST          /data/service/test/                                    controllers.service.backbone.birdbridge.ServiceTestController.create
+GET           /data/service/test/                                    controllers.service.backbone.birdbridge.ServiceTestController.get(id = "0")
+GET           /data/service/test/:id                                 controllers.service.backbone.birdbridge.ServiceTestController.get(id: String)
+GET           /data/service/test/suite/:id                           controllers.service.backbone.birdbridge.ServiceTestController.getBySuite(id: String)
+PUT           /data/service/test/:id                                 controllers.service.backbone.birdbridge.ServiceTestController.update(id: String)
+DELETE        /data/service/test/:id                                 controllers.service.backbone.birdbridge.ServiceTestController.delete(id: String)
+
+#########################################################################################################
+# Service REQUEST /request
+POST          /data/service/request/                                 controllers.service.backbone.birdbridge.ServiceRequestController.create
+GET           /data/service/request/                                 controllers.service.backbone.birdbridge.ServiceRequestController.get(id = "0")
+GET           /data/service/request/:id                              controllers.service.backbone.birdbridge.ServiceRequestController.get(id: String)
+GET           /data/service/request/test/:id                         controllers.service.backbone.birdbridge.ServiceRequestController.getByTest(id: String)
+PUT           /data/service/request/:id                              controllers.service.backbone.birdbridge.ServiceRequestController.update(id: String)
+DELETE        /data/service/request/:id                              controllers.service.backbone.birdbridge.ServiceRequestController.delete(id: String)
+
+#########################################################################################################
+#########################################################################################################
+# Service Function /service
+
+#########################################################################################################
+# Service API /api
+PUT           /function/service/execute/request/:id                  controllers.service.backbone.birdbridge.ServiceExecuteController.executeRequest(id: String)
+PUT           /function/service/execute/test/:id                     controllers.service.backbone.birdbridge.ServiceExecuteController.executeTest(id: String)
+PUT           /function/service/execute/suite/:id                    controllers.service.backbone.birdbridge.ServiceExecuteController.executeSuite(id: String)
+GET           /function/service/execute/status                       controllers.service.backbone.birdbridge.ServiceExecuteController.feedStatus
+
+
+#########################################################################################################
+################# deprecated ############################################################################
+# document - run
+#
+POST          /api/document/run/                                     controllers.backservice.RunApplication.create
+PUT           /api/document/run/:id                                  controllers.backservice.RunApplication.update(id: String)
+GET           /api/document/run/:id                                  controllers.backservice.RunApplication.get(id: String)
+DELETE        /api/document/run/:id                                  controllers.backservice.RunApplication.delete(id: String)
+
+#document - suite
+#
+POST          /api/document/suite/                                   controllers.backservice.SuiteApplication.create
+PUT           /api/document/suite/:id                                controllers.backservice.SuiteApplication.update(id: String)
+GET           /api/document/suite/:id                                controllers.backservice.SuiteApplication.get(id: String)
+DELETE        /api/document/suite/:id                                controllers.backservice.SuiteApplication.delete(id: String)
+
+#document - test
+POST          /api/document/test/                                    controllers.backservice.TestApplication.create
+PUT           /api/document/test/:id                                 controllers.backservice.TestApplication.update(id: String)
+GET           /api/document/test/:id                                 controllers.backservice.TestApplication.get(id: String)
+DELETE        /api/document/test/:id                                 controllers.backservice.TestApplication.delete(id: String)
+
+#document - test
+POST          /api/document/testcase/                                controllers.backservice.TestCaseApplication.create
+PUT           /api/document/testcase/:id                             controllers.backservice.TestCaseApplication.update(id: String)
+GET           /api/document/testcase/:id                             controllers.backservice.TestCaseApplication.get(id: String)
+DELETE        /api/document/testcase/:id                             controllers.backservice.TestCaseApplication.delete(id: String)

@@ -1,0 +1,39 @@
+<div class="request_result">
+    <div class="request_result_input">
+        <div>
+            <div class="result_request_method inline" ng-style="{'background-color':reqView.methodColor[currentResult.input.method]}" >{{currentResult.input.method}}</div>
+            <hf-label label-value="{{currentResult.input.url}}" label-length='160'></hf-label>
+        </div>
+        <div>
+            <div class="result_request_header_label">Headers:</div>
+            <div class="result_request_headers" ng-repeat="h in currentResult.input.headers">
+                <div>{{h.name}} :
+                    <hf-label label-value="{{h.value}}" label-length='60'></hf-label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="result_request_header_label">Body:</div>
+            <div class="result_request_body">{{currentResult.input.body}}</div>
+        </div>
+    </div>
+    <hr />
+    <div class="request_result_output">
+        <div>
+            <div class="inline">Response Code: {{currentResult.output.responseCode}}</div>
+        </div>
+        <div>
+            <div class="result_request_header_label">Headers:</div>
+            <div class="result_request_headers" ng-repeat="h in currentResult.output.headers">
+                <div>{{h.name}} :
+                    <hf-label label-value="{{h.value}}" label-length='60'></hf-label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="result_request_header_label">Body:</div>
+            <hf-body body-value="requestMetas[$index].result.output.body"></hf-body>
+            @*<div class="result_request_body">{{currentResult.output.body}}</div>*@
+        </div>
+    </div>
+</div>

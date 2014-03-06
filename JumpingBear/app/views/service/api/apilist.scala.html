@@ -1,0 +1,32 @@
+<div class="apis_box" ng-repeat="api in apis" ng-class="{new_api_in_list: api.newCreateColor, white:!api.newCreateColor}">
+    <div class="single_api card_style_no_margin" ng-mouseover="updateHover($index, true)" ng-mouseleave="updateHover($index, false)">
+        <div>
+            <div class="single_api_name inline">
+                <label>
+                    <input class="label_input text_box_back" type="text" value="{{api.name}}" ng-model="api.name" readonly>
+                </label>
+                <div class="single_api_endpoint">{{api.endpoint}}</div>
+            </div>
+            <div class="single_api_service inline">{{api.service}}</div>
+            <div class="single_api_domain inline">{{api.domain}}</div>
+        </div>
+        <div class="single_api_ops" ng-class="{show: $index==currentHover, hide:$index!=currentHover}">
+            <div><img height="20" width="20" src="@routes.Assets.at("images/editapi.png")" title="edit" ng-click="editAPI($index);"></div>
+            <div><img height="20" width="20" src="@routes.Assets.at("images/deleteapi.png")" title="delete" ng-click="deleteAPI($index)"></div>
+        </div>
+        <div class="single_api_meta inline">
+            <div class="single_api_testnumber inline" title="Test Plans">{{api.tests | zoomToZero}}</div>
+        </div>
+    </div>
+    <hf-drawer open="editIndex==$index" draw-height="currentHeight">
+        <div ng-switch="singleApiOps">
+            <div ng-switch-when="editAPI">
+                <div ng-include="'/template/service/api/create'"></div>
+            </div>
+            <div ng-switch-when="deleteAPI">
+                <div class="delete_api_label inline">Delete this API: {{api.name}}</div>
+                <hf-button on-submit='submitDeleteAPI' on-discard='discardDeleteAPI' param='$index'></hf-button>
+            </div>
+        </div>
+    </hf-drawer>
+</div>
