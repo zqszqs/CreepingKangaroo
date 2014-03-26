@@ -4,7 +4,7 @@
  * JS Description:
  */
 
-var bear = angular.module('jumpingbear', ['ngRoute']);
+var bear = angular.module('jumpingbear', ["ngRoute"]);
 
 var secApi = {name: "API Testing", url: "/service/api"};
 var secDashboard = {name: "Dash Board", url: "/test/dashboard"};

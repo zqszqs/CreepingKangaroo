@@ -31,6 +31,103 @@ var methodColor = {
     PURGE: '#326DB2'
 };
 
+function LeafNode (value, props) {
+    "use strict";
+    this.value = value;
+    this.props = props;
+};
+
+LeafNode.prototype.constructor = 'LeafNode';
+
+
+var stringifyAndAppend = function (obj) {
+    var p, ps = [];
+    for (p in obj) {
+        if (exists(p) && exists(obj[p]))
+            ps.push(p + "=" + obj[p]);
+    }
+    return ps.join("&&");
+}
+
+var exists = function (src) {
+    return (typeof src != 'undefined') && src.length > 0;
+}
+
+function isNotEmpty(obj) {
+    return Object.keys(obj).length != 0;
+}
+
+var reverseTransfer = function (jsonDst) {
+    if (typeof jsonDst === 'array') {
+            return jsonDst.map(reverseTransfer);
+    } else if (typeof jsonDst === 'object' && jsonDst.constructor != 'LeafNode') {
+        var re = {}, p;
+        for (p in jsonDst) {
+            re[p] = reverseTransfer(jsonDst[p]);
+        }
+        return re;
+    } else {
+        if (jsonDst.constructor === 'LeafNode') {
+            var outObj = {};
+            if (exists(jsonDst.value))
+                outObj['value'] = jsonDst.value;
+
+            if (isNotEmpty(jsonDst.props) && isNotEmpty(outObj)) {
+                return "{%" + stringifyAndAppend(outObj) + "&&" + stringifyAndAppend(jsonDst.props) + "%}";
+            }
+            else if (isNotEmpty(jsonDst.props)) {
+                return "{%" + stringifyAndAppend(jsonDst.props) + "%}";
+            }
+            else if (isNotEmpty(outObj)) {
+                return "{%" + stringifyAndAppend(outObj) + "%}";
+            }
+            else
+                return "";
+        }
+    }
+
+}
+
+var transfer = function (jsonSrc) {
+    'use strict';
+
+    if (typeof jsonSrc === 'array') {
+        return jsonSrc.map(transfer);
+    } else if (typeof jsonSrc === 'object') {
+        var re = {}, p;
+        for (p in jsonSrc) {
+            re[p] = transfer(jsonSrc[p]);
+        }
+        return re;
+    } else {
+        var type, value;
+        if (typeof jsonSrc === 'string') {
+            if (jsonSrc.indexOf("{%") == 0) {
+                var pro = {};
+                jsonSrc.replace("{%", "").replace("%}", "").split("&&").map(function (entry) {
+                    var nAv = entry.split("=");
+                    if (nAv[0] === 'value')
+                        value = nAv[1];
+                    else
+                        pro[nAv[0]] = nAv[1];
+                });
+                return new LeafNode(value, pro);
+            }
+            else {
+                return new LeafNode(jsonSrc, {type: "STRING"});
+            }
+        }
+        else if (typeof jsonSrc === 'number')
+            return new LeafNode(jsonSrc.toString(), {type: "NUMBER"});
+        else if (typeof jsonSrc === 'boolean')
+            return new LeafNode(jsonSrc.toString(), {type: "BOOLEAN"});
+    }
+};
+
+Array.prototype.constructor = 'Array';
+String.prototype.constructor = 'String';
+Object.prototype.constructor = 'Object';
+
 var httpMethod = [
     [
         {name: 'GET', color: '#B3FFB5'},
@@ -63,7 +160,9 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
         selectedMethod: httpMethod[0][0],
         startSelectMethod: false,
         methodColor: methodColor,
-        executeAllRequestImg: 'execute.png'
+        executeAllRequestImg: 'execute.png',
+        outputBodySwitch: 'Raw',
+        outputBodySwitchView: 'Parsed'
     };
     $scope.buf = {};
 
@@ -171,6 +270,9 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
         $scope.requestMetas = Array.apply(null, new Array(data.length)).map(function (a) {
             return {executePng: 'execute.png'};
         });
+        $scope.parsedBodies = Array.apply(null, new Array(data.length)).map(function (a) {
+                    return {};
+                });
         $scope.requests = data;
         setTimeout(new function () {
             STATUS.use(allRequestStateUpdater);
@@ -194,6 +296,21 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
             return "execute.png";
     };
 
+    var toggleRaw = function () {
+        $scope.reqView.outputBodySwitchView = 'Raw';
+        $scope.reqView.outputBodySwitch = 'Parsed';
+    };
+
+    var toggleParsed = function () {
+        $scope.reqView.outputBodySwitchView = 'Parsed';
+        $scope.reqView.outputBodySwitch = 'Raw';
+    };
+
+    var toggleNewParsed = function () {
+        $scope.reqView.outputBodySwitchView = 'newParsed';
+        $scope.reqView.outputBodySwitch = 'Raw';
+    };
+
     $scope.editRequest = function (index) {
         $scope.closeSelectMethod();
         $scope.reqView.startAddRequest = false;
@@ -207,12 +324,24 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
                 headerNum = $scope.newRequest.input.headers.length;
             if (typeof $scope.newRequest.output.headers != 'undefined')
                 headerNum = $scope.newRequest.output.headers.length + headerNum;
-            var height = 855 + headerNum * 34;
+            var height = 3855 + headerNum * 34;
+            if (typeof $scope.newRequest.output.body == 'undefined' || $scope.newRequest.output.body.length == 0)
+                toggleRaw();
+            else
+                try {
+                    $scope.parsedBodies[index] = transfer(JSON.parse($scope.newRequest.output.body));
+                    toggleParsed();
+                } catch (e) {
+                    toggleRaw();
+                }
+
             $scope.reqView.gapHeight = height + 'px';
             $scope.reqView.gapContent = 'editRequest';
             $scope.reqView.openOperate = index;
             $scope.button = {
                 submit: function () {
+//                    console.log(JSON.stringify(reverseTransfer($scope.parsedBody)));
+                    $scope.newRequest.output.body = JSON.stringify(reverseTransfer($scope.parsedBodies[index]));
                     REQUEST.update($scope.newRequest).success(function (data) {
                         $scope.requestMetas[index].requestModified = true;
                         $scope.reqView.openOperate = -1;
@@ -287,6 +416,15 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
                 headers: []
             }
         };
+        if (typeof $scope.newRequest.output.body == 'undefined' || $scope.newRequest.output.body.length == 0)
+            toggleRaw();
+        else
+            try {
+                $scope.parsedBodies[index] = transfer(JSON.parse($scope.newRequest.output.body));
+                toggleParsed();
+            } catch (e) {
+                toggleRaw();
+        }
         $scope.reqView.startAddRequest = true;
         $scope.button = {
             submit: function () {
@@ -296,6 +434,10 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
                 removeEmpty($scope.newRequest.output.headers);
                 if ($scope.newRequest.output.headers.length == 0)
                     delete $scope.newRequest.output['headers'];
+
+                if (typeof $scope.newParsedBody != 'undefined')
+                    $scope.newRequest.output.body = JSON.stringify(reverseTransfer($scope.newParsedBody));
+
                 REQUEST.save($scope.newRequest).success(function (data) {
                     $scope.newRequest.id = data.id;
                     $scope.requests.push($scope.newRequest);
@@ -371,5 +513,20 @@ bearAPI.controller("RequestController", ['$scope', 'REQUEST', 'EXECUTOR', 'STATU
         });
     };
 
+    $scope.outputBodyToggle = function (index) {
+        if ($scope.reqView.outputBodySwitch === 'Raw') {
+            toggleRaw();
+        }
+        else {
+            if ($scope.reqView.startAddRequest) {
+                $scope.newParsedBody = transfer(JSON.parse($scope.newRequest.output.body));
+                toggleNewParsed();
+            }
+            else {
+                $scope.parsedBodies[index] = transfer(JSON.parse($scope.newRequest.output.body));
+                toggleParsed();
+            }
+        }
+    }
 }])
 ;

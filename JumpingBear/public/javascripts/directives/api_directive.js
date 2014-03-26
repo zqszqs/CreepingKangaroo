@@ -182,29 +182,175 @@ bearAPI.directive('hfJsonField', function () {
 });
 
 bearAPI.directive('draggable', function () {
-    return {
-        restrict: 'EA',
-        scope: {
-            onDragStart: '=',
-            onDragEnd: '='
-        },
-        link: function (scope, element, attrs) {
-            element[0].addEventListener('drop', scope.onDragStart, false);
-            element[0].addEventListener('dragend', scope.onDragEnd, false);
+    return function(scope, element, attrs) {
+            // this gives us the native JS object
+            var el = element[0];
+
+            el.draggable = true;
+
+            el.addEventListener(
+                'dragstart',
+                function(e) {
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData("type", attrs['type']);
+                    e.dataTransfer.setData("value", attrs['value']);
+                    this.classList.add('drag');
+                    return false;
+                },
+                false
+            );
+
+            el.addEventListener(
+                'dragend',
+                function(e) {
+                    this.classList.remove('drag');
+                    return false;
+                },
+                false
+            );
         }
-    }
 });
 
 bearAPI.directive('droppable', function() {
     return {
+            scope: {
+                drop: '=',
+                index: '='
+            },
+            link: function(scope, element) {
+                // again we need the native object
+                var el = element[0];
+
+                el.addEventListener(
+                    'dragover',
+                    function(e) {
+                        e.dataTransfer.dropEffect = 'move';
+                        // allows us to drop
+                        if (e.preventDefault) e.preventDefault();
+                        this.classList.add('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'dragenter',
+                    function(e) {
+                        this.classList.add('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'dragleave',
+                    function(e) {
+                        this.classList.remove('over');
+                        return false;
+                    },
+                    false
+                );
+
+                el.addEventListener(
+                    'drop',
+                    function(e) {
+                        var type = e.dataTransfer.getData("type");
+                        var value = e.dataTransfer.getData("value");
+                        // Stops some browsers from redirecting.
+                        if (e.stopPropagation) e.stopPropagation();
+                        this.classList.remove('over');
+                        scope.drop(scope.index, type, value);
+                        return false;
+                    },
+                    false
+                );
+            }
+        }
+});
+
+bearAPI.directive('hfInputBody', function() {
+    return {
         restrict: 'EA',
         scope: {
-            onDrop: '=',
-            onDragOver: '='
+            bodyContent: '='
+        },
+        template: "<div><hf-input-object object-value='bodyContent'></hf-input-object></div>",
+        link: function (scope, element, attrs) {
+        }
+    };
+});
+
+bearAPI.directive('hfInputObject', function($compile) {
+    return {
+        restrict: 'EA',
+        scope: {
+            objectValue: '='
         },
         link: function (scope, element, attrs) {
-            element[0].addEventListener('drop', scope.onDrop, false);
-            element[0].addEventListener('dragover', scope.onDragOver, false);
+            scope.fields = [];
+            scope.onDrop = function (index, arg0, arg1) {
+                scope.fields[index].value.props[arg0] = arg1;
+                scope.$apply();
+            };
+            for (n in scope.objectValue) {
+                scope.fields.push({name: n, type: scope.objectValue[n].constructor, value: scope.objectValue[n]});
+            }
+            var template = "<div class='inline'>{</div><div class='indent'>" +
+                "<div ng-repeat='f in fields'><div droppable drop='onDrop' index='$index'><div class='inline' style='vertical-align: top'>\"{{f.name}}\": </div>" +
+                "<div ng-switch='f.type' class='inline'>" +
+                "<hf-input-field ng-switch-when='LeafNode' field-value='f.value' ng-class='inline'></hf-input-field>" +
+                "<hf-input-object ng-switch-when='Object' object-value='f.value'></hf-input-object>" +
+                "<hf-input-array ng-switch-when='Array' array-value='f.value'></hf-input-array>" +
+                "</div> " +
+                "</div></div> </div><div class='inline'>}</div>";
+            var $template = angular.element(template);
+            $compile($template)(scope);
+            element.append($template);
         }
+    }
+});
+
+bearAPI.directive('hfInputArray', function($compile) {
+return {
+    restrict: 'EA',
+    scope: {
+        arrayValue: '='
+    },
+    link: function(scope, element, attrs) {
+        scope.fields = scope.arrayValue.map(function (entry) {
+            return {type: entry.constructor, value: entry}
+        });
+        var template = "<div class='inline'>[</div><div class='indent'><div ng-repeat='f in fields'>" +
+            "<div ng-switch='f.type' class='inline'>" +
+            "<hf-json-field ng-switch-when='LeafNode' field-value='f.value'></hf-json-field>" +
+            "<hf-json-object ng-switch-when='Object' object-value='f.value'></hf-json-object>" +
+            "<hf-json-array ng-switch-when='Array' array-value='f.value'></hf-json-array>" +
+            "</div> " +
+            "</div> </div><div class='inline'>]</div> ";
+        var $template = angular.element(template);
+        $compile($template)(scope);
+        element.append($template);
+    }
+    }
+});
+
+bearAPI.directive('hfInputField', function() {
+    return {
+        restrict: 'EA',
+        scope: {
+            fieldValue: "="
+        },
+        template: '<div class="inline"><input ng-model="fieldValue.value"></input></div><div class="inline" ng-repeat="prop in fieldValue.props"><div class="inline body_prop body_error" ng-class="">{{prop}}</div></div>',
+        compile: function (element, attrs) {
+            return {
+                pre: function (scope, element, attrs) {
+
+                }
+            }
+        },
+        link: function (scope, element, attrs) {
+            console.log(scope.fieldValue)
+        }
+
     }
 });

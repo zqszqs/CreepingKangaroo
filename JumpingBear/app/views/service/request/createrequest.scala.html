@@ -2,7 +2,7 @@
     <div class="new_request_wrap card_style">
         <div class="request_name_desc">
             <div>
-                <div class="req_label_span inline">Name : </div>
+                <div class="req_label_span inline">Name :</div>
                 <div class="request_name_div inline">
                     <label>
                         <input class="request_name" placeholder="Enter request name" ng-model="newRequest.name">
@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div>
-                <div class="req_label_span inline">Description : </div>
+                <div class="req_label_span inline">Description :</div>
                 <div class="request_name_div inline">
                     <label>
                         <input class="request_name" placeholder="Enter description" ng-model="newRequest.description">
@@ -21,17 +21,23 @@
     </div>
     <div class="new_request_info_wrap card_style">
         <div>
-            <div class="request_new_method inline" ng-style="{'background-color':reqView.methodColor[newRequest.input.method]}" ng-click="selectMethodPop()">{{newRequest.input.method}}</div>
+            <div class="request_new_method inline"
+                 ng-style="{'background-color':reqView.methodColor[newRequest.input.method]}"
+                 ng-click="selectMethodPop()">{{newRequest.input.method}}
+            </div>
             <div class="request_new_endpoint inline">
                 <label>
                     <input class="request_name" placeholder="enter endpoint" ng-model="newRequest.input.endpoint">
                 </label>
             </div>
-            <div class="request_new_method_select card_style" ng-show="reqView.startSelectMethod && newRequest.index == $index">
+            <div class="request_new_method_select card_style"
+                 ng-show="reqView.startSelectMethod && newRequest.index == $index">
                 <div>
                     <div class="method_row" ng-repeat="methodRow in reqView.httpMethods">
                         <div class="method_item inline" ng-repeat="method in methodRow">
-                            <div class="inline" ng-style="{'background-color': method.color}" ng-click="selectMethod(method)">{{method.name}}</div>
+                            <div class="inline" ng-style="{'background-color': method.color}"
+                                 ng-click="selectMethod(method)">{{method.name}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,18 +70,21 @@
             <div class="req_label_span">Body:</div>
             <div class="new_request_body_div">
                 <label>
-                    <textarea class="new_request_body" placeholder="Enter request body" ng-model="newRequest.input.body"></textarea>
+                    <textarea class="new_request_body" placeholder="Enter request body"
+                              ng-model="newRequest.input.body"></textarea>
                 </label>
+
                 <div class="parsed_body"></div>
             </div>
         </div>
     </div>
     <div class="new_request_response_wrap card_style">
         <div class="new_response_status">
-            <div class="req_label_span inline">Response code : </div>
+            <div class="req_label_span inline">Response code :</div>
             <div class="request_name_div inline">
                 <label>
-                    <input class="inline response_code request_name" placeholder="Enter response status" ng-model="newRequest.output.responseCode">
+                    <input class="inline response_code request_name" placeholder="Enter response status"
+                           ng-model="newRequest.output.responseCode">
                 </label>
             </div>
         </div>
@@ -94,10 +103,35 @@
         <div class="request_body">
             <div class="req_label_span">Body:</div>
             <div class="new_request_body_div">
-                <label>
-                    <textarea class="new_request_body" placeholder="Enter request body" ng-model="newRequest.output.body" ></textarea>
-                </label>
-                <div class="parsed_body"></div>
+                <div ng-switch="reqView.outputBodySwitchView">
+                    <label ng-switch-when="Raw">
+                        <textarea class="new_request_body" placeholder="Enter request body"
+                                  ng-model="newRequest.output.body"></textarea>
+                    </label>
+
+                    <div ng-switch-when="Parsed">
+                        <div class="json_field_operator">
+                            <div class="inline" draggable type="type" value="STRING">STRING</div>
+                            <div class="inline" draggable type="type" value="NUMBER">NUMBER</div>
+                            <div class="inline" draggable type="type" value="BOOLEAN">BOOLEAN</div>
+                        </div>
+                        <hf-input-body body-content="parsedBodies[$index]" >
+
+                        </hf-input-body>
+                    </div>
+
+                    <div ng-switch-when="newParsed">
+                        <div class="json_field_operator">
+                            <div class="inline" draggable type="type" value="STRING">STRING</div>
+                            <div class="inline" draggable type="type" value="NUMBER">NUMBER</div>
+                            <div class="inline" draggable type="type" value="BOOLEAN">BOOLEAN</div>
+                        </div>
+                        <hf-input-body body-content="newParsedBody" >
+
+                        </hf-input-body>
+                    </div>
+                </div>
+                <button ng-click="outputBodyToggle($index)">{{reqView.outputBodySwitch}}</button>
             </div>
         </div>
     </div>
