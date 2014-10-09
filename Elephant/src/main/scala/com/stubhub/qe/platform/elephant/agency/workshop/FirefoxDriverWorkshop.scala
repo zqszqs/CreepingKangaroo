@@ -2,70 +2,100 @@ package com.stubhub.qe.platform.elephant.agency.workshop
 
 import java.io.File
 
-import com.stubhub.qe.platform.elephant.agency.driverinfo.FirefoxDriverInfo
 import com.stubhub.qe.platform.elephant.agency.manage.FirefoxUXDriverAgent
-import com.stubhub.qe.platform.elephant.agency.workshop.DriverParameters._
+import com.stubhub.qe.platform.elephant.context.ContextTree
+import com.stubhub.qe.platform.elephant.log.LogRepository
 import org.openqa.selenium.Platform
 import org.openqa.selenium.firefox.{FirefoxDriver, FirefoxProfile}
 import org.openqa.selenium.remote.{CapabilityType, DesiredCapabilities}
-
-import scala.collection.immutable.HashMap
-
 /**
  *
  * @author Hongfei Zhou
  * @version 1.0, Aug. 13 2014
  */
 object FirefoxDriverWorkshop {
-    def produceAgent(driverInfo: FirefoxDriverInfo): FirefoxUXDriverAgent = FirefoxUXDriverAgent(
-        new FirefoxDriver(buildCapabilities(driverInfo.keys, driverInfo.configs))
+    def produceAgent(context: ContextTree): FirefoxUXDriverAgent = FirefoxUXDriverAgent(
+        new FirefoxDriver(buildCapabilities(context)), context
     )
 
-    def buildCapabilities(keys: Set[String], config: Map[String, String]): DesiredCapabilities = {
+    def buildCapabilities(context: ContextTree): DesiredCapabilities = {
         val capabilities = DesiredCapabilities.firefox()
 
-        capabilities.setCapability(FirefoxDriver.PROFILE, buildFirefoxProfile(keys, config))
+        capabilities.setCapability(FirefoxDriver.PROFILE, buildFirefoxProfile(context.getContextTree("firefox")))
 
-        config.get(ENABLE_JAVASCRIPT) match {
+        val logBlock = LogRepository.current.newBlock
+        logBlock.addLog(WorkshopLog("Created Firefox capability"))
+        logBlock.addLog(WorkshopLog("Added Firefox profile"))
+
+        context.getOptValue("firefox.enableJavascript") match {
             case None => capabilities.setJavascriptEnabled(true)
-            case Some(decision) => capabilities.setJavascriptEnabled(decision.asInstanceOf[Boolean])
+            case Some(decision) => capabilities.setJavascriptEnabled(decision.toBoolean)
         }
 
         capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true)
         capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true)
+        logBlock.addLog(WorkshopLog("Set accept ssl certs to true"))
 
-        config.get(WEB_RUN_BROWSER_VERSION).map(capabilities.setVersion)
-        config.get(WEB_RUN_PLATFORM).map((platform) => capabilities setPlatform Platform.valueOf(platform))
-        config.get(API_PROXY_HOST).map(capabilities.setCapability(CapabilityType.PROXY, _))
+        context.getOptValue("firefox.browserVersion").map((v) => {
+            capabilities.setVersion(v)
+            logBlock.addLog(WorkshopLog("Set browser version to " + v))
+        })
 
-        capabilities
+        context.getOptValue("firefox.platform").map((platform) => capabilities setPlatform Platform.valueOf(platform))
+        context.getOptValue("firefox.apiProxyHost").map(capabilities.setCapability(CapabilityType.PROXY, _))
+
+        context.getOptValue("firefox.injector") match {
+            case None => capabilities
+            case Some(injector) =>
+                if (classOf[CapabilityInjector] isAssignableFrom Class.forName(injector))
+                    Class.forName(injector).newInstance().asInstanceOf[CapabilityInjector].inject(capabilities)
+                else
+                    capabilities
+        }
     }
 
-    def buildFirefoxProfile(keys: Set[String], config: Map[String, String]): FirefoxProfile = {
-        val profile = config.get(FIREFOX_USER_PROFILE_PATH) match {
+    def buildFirefoxProfile(context: ContextTree): FirefoxProfile = {
+        val logBlock = LogRepository.current.newBlock
+        logBlock.addLog(WorkshopLog("Build firefox profile"))
+
+        val profile = context.getOptValue("profilePath") match {
             case None => new FirefoxProfile()
             case Some(path) => new FirefoxProfile(new File(path))
         }
 
-        config.get(SET_ACCEPT_UNTRUSTED_CERTIFICATES).map((setCert) => profile setAcceptUntrustedCertificates setCert.asInstanceOf[Boolean])
+        context.getOptValue("acceptUntrustedCertificates").map((setCert) => {
+            profile setAcceptUntrustedCertificates setCert.toBoolean
+            logBlock.addLog(WorkshopLog("Set accept untrusted certificates to " + setCert))
+        })
 
-        config.get(SET_ASSUME_UNTRUSTED_CERTIFICATE_ISSUERS).map((assumeIssuer) => profile setAssumeUntrustedCertificateIssuer assumeIssuer.asInstanceOf[Boolean])
+        context.getOptValue("assumeUntrustedCertificateIssuer").map((assumeIssuer) => {
+            profile setAssumeUntrustedCertificateIssuer assumeIssuer.toBoolean
+            logBlock.addLog(WorkshopLog("Set assume untrusted certificate issuers to " + assumeIssuer))
+        })
 
-        config.get(FIREFOX_BINARY_PATH).map(System.setProperty("webdriver.firefox.bin", _))
+        context.getOptValue("binaryPath").map((path) => {
+            System.setProperty("webdriver.firefox.bin", path)
+            logBlock.addLog(WorkshopLog("Set webdriver.firefox.bin to " + path))
+        })
 
-        config.get(USER_AGENT).map(profile.setPreference("general.useragent.override", _))
+        context.getOptValue("userAgent").map((userAgent) => {
+            profile.setPreference("general.useragent.override", userAgent)
+            logBlock.addLog(WorkshopLog("Set general.useragent.orverride to " + userAgent))
+        })
 
-        config.get(NTLM_AUTH_TRUSTED_URIS).map(profile.setPreference("network.automatic-ntlm-auth.trusted-uris", _))
+        context.getOptValue("ntlmAuthTrustedUris").map(profile.setPreference("network.automatic-ntlm-auth.trusted-uris", _))
 
-        config.get(BROWSER_DOWNLOAD_DIR).map((dir) => {
+        context.getOptValue("downloadDir").map((dir) => {
             profile.setPreference("browser.download.dir", dir)
             profile.setPreference("browser.download.folderList", 2)
             profile.setPreference("browser.download.manager.showWhenStarting", false)
             profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream,text/plain,application/pdf,application/zip,text/csv,text/html")
         })
 
-        config.get(ENABLE_JAVASCRIPT) match {
-            case Some("false") | None => profile.setPreference("javascript.enabled", false)
+        context.getOptValue("enableJavascript") match {
+            case Some("false") =>
+                profile.setPreference("javascript.enabled", false)
+                logBlock.addLog(WorkshopLog("Set javascript.enable to false"))
             case _ => None
         }
 
@@ -81,6 +111,13 @@ object FirefoxDriverWorkshop {
         profile.setPreference("dom.ipc.plugins.enabled", false)
         profile.setPreference("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false)
 
-        profile
+        context.getOptValue("injector") match {
+            case None => profile
+            case Some(injector) =>
+                if (classOf[FirefoxProfileInjector] isAssignableFrom Class.forName(injector))
+                    Class.forName(injector).newInstance().asInstanceOf[FirefoxProfileInjector].inject(profile)
+                else
+                    profile
+        }
     }
 }

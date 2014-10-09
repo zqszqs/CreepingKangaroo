@@ -1,7 +1,8 @@
 package com.stubhub.qe.platform.elephant.agency.workshop
 
-import com.stubhub.qe.platform.elephant.agency.driverinfo.{FirefoxDriverInfo, ChromeDriverInfo, DriverInfo}
-import com.stubhub.qe.platform.elephant.agency.manage.UXDriverAgent
+import com.stubhub.qe.platform.elephant.agency.manage.{DriverAgent, UXDriverAgent}
+import com.stubhub.qe.platform.elephant.context.ContextTree
+import com.stubhub.qe.platform.elephant.log.Log
 
 /**
  *
@@ -12,9 +13,16 @@ class DriverWorkshop
 
 
 object DriverWorkshop {
-    def produceAgent(driverInfo: DriverInfo): UXDriverAgent = driverInfo match {
-        case chrome: ChromeDriverInfo => ChromeDriverWorkshop.produceAgent(chrome)
-        case firefox: FirefoxDriverInfo => FirefoxDriverWorkshop.produceAgent(firefox)
+    def produceAgent(context: ContextTree): DriverAgent = context.getValue match {
+        case "chrome" | "Chrome" | "CHROME" =>ChromeDriverWorkshop.produceAgent(context)
+        case "firefox" | "Firefox" | "FIREFOX" =>FirefoxDriverWorkshop.produceAgent(context)
+        case "android" | "Android" | "ANDROID" => AndroidDriverWorkshop.produceAgent(context)
         case _ => ???
     }
+}
+
+class WorkshopLog(content: String) extends Log("WORKSHOP", content)
+
+object WorkshopLog {
+    def apply(content: String) = new WorkshopLog(content)
 }
