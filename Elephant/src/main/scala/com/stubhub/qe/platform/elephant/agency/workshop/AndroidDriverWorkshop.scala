@@ -18,7 +18,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
  */
 object AndroidDriverWorkshop {
     def produceAgent(context: ContextTree): AndroidDriverAgent = {
-        val capabilities = buildCapabilities(capabilities)
+        val capabilities = buildCapabilities(context)
 
         val server = context.getOptValue("grid") match {
             case Some(grid) => new URL(grid)
