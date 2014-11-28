@@ -1,18 +1,19 @@
-name := "com.stubhub.qe.platform.core"
+name := "michaelwork.elephant.core"
 
-organization := "com.stubhub.qe.platform"
+organization := "michaelwork.elephant"
 
 version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.11.2"
 
-//resolvers += "StubHub Repository" at "https://mvnrepository.stubcorp.dev/nexus/content/groups/stubhub-public/"
+resolvers += "StubHub Repository" at "https://mvnrepository.stubcorp.dev/nexus/content/groups/stubhub-public/"
+
 resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
 crossPaths := false
 
 libraryDependencies ++= Seq(
-    "org.seleniumhq.selenium" % "selenium-java" % "2.42.2",
+    "org.seleniumhq.selenium" % "selenium-java" % "2.44.0",
     "org.testng" % "testng" % "6.8",
     "org.apache.httpcomponents" % "httpclient" % "4.3.5",
     "org.apache.commons" % "commons-csv" % "1.0",
